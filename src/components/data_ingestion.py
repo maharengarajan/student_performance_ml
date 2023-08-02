@@ -29,7 +29,8 @@ class DataIngesition:
             df = pd.read_csv('notebook\data\StudentsPerformance.csv')
             logging.info('Read the data and saving it in dataframe')
             
-            os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True)
+            #creating a directory
+            os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True) 
 
             df.to_csv(self.ingestion_config.raw_data_path, index=False, header=True)
 
