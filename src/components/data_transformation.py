@@ -23,6 +23,7 @@ class DataTransformation:
         self.data_transformation_config = DataTransformationConfig()
 
     def get_data_transformer_obj(self):
+        """This fun is responsible for data transformation based on different types of data"""
         try:
             numerical_columns = ['reading score', 'writing score']
             categorical_columns = ['gender','race/ethnicity','parental level of education','lunch','test preparation course']
@@ -45,10 +46,11 @@ class DataTransformation:
             raise CustomException(e,sys)    
         
     def initiate_data_transformation(self,train_data_path,test_data_path):
+        """This fun is responsible for starting my data transformation"""
         try:
             train_df = pd.read_csv(train_data_path)
             test_df = pd.read_csv(test_data_path)
-            logging.info('Reding dataset completed')
+            logging.info('Read train and test dataset completed')
 
             preprocessing_obj = self.get_data_transformer_obj()
             logging.info('obtaining pre processing object')
@@ -66,6 +68,7 @@ class DataTransformation:
             input_feature_train_array = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_array = preprocessing_obj.transform(input_feature_test_df)
 
+            #concatenate two arraye(train input array,train output array)
             train_arr = np.c_[input_feature_train_array,np.array(target_feature_train_df)]
             test_arr = np.c_[input_feature_test_array,np.array(target_feature_test_df)]
 
