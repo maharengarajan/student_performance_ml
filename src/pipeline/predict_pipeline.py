@@ -1,4 +1,5 @@
 import sys
+import os
 import pandas as pd
 import numpy as np
 
@@ -9,10 +10,11 @@ class PredictPipeline:
     def __init__(self):
         pass
 
+    #this fun is for prediction
     def predict(self,features):
         try:
-            model_path = 'artifacts\model.pkl'
-            preprocessor_path = 'artifacts\preprocessor.pkl'
+            model_path = os.path.join("artifacts","model.pkl")
+            preprocessor_path = os.path.join('artifacts','preprocessor.pkl')
             model = load_object(file_path = model_path)
             preprocessor = load_object(file_path=preprocessor_path)
             data_scaled = preprocessor.transform(features)
@@ -21,7 +23,7 @@ class PredictPipeline:
         except Exception as e:
             raise CustomException(e,sys)
 
-
+#this class resoonsible for mapping input values in html to the backend
 class CustomData:
     def __init__(self,
                  gender:str,
@@ -30,25 +32,25 @@ class CustomData:
                  lunch:str,
                  test_preparation_course:str,
                  reading_score:int,
-                 writting_score:int):
+                 writing_score:int):
         self.gender = gender
         self.race_ethnicity = race_ethnicity
         self.parental_level_of_education = parental_level_of_education
         self.lunch = lunch
         self.test_preparation_course = test_preparation_course
         self.reading_score = reading_score
-        self.writting_score = writting_score
+        self.writing_score = writing_score
 
-    #this fun will return all input data into dataframe
+    #this fun will return all the html input data into dataframe
     def get_data_as_data_frame(self):
         try:
             custom_data_input_dict = {"gender":[self.gender],
-                                      "race_ethnicity":[self.race_ethnicity],
-                                      "parental_level_of_education":[self.parental_level_of_education],
+                                      "race/ethnicity":[self.race_ethnicity],
+                                      "parental level of education":[self.parental_level_of_education],
                                       "lunch":[self.lunch],
-                                      "test_preparation_course":[self.test_preparation_course],
-                                      "reading_score":[self.reading_score],
-                                      "writting_score":[self.writting_score]}
+                                      "test preparation course":[self.test_preparation_course],
+                                      "reading score":[self.reading_score],
+                                      "writing score":[self.writing_score]}
             return pd.DataFrame(custom_data_input_dict)
         except Exception as e:
             raise CustomException(e,sys)
