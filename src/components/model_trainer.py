@@ -20,6 +20,7 @@ from sklearn.metrics import r2_score
 class ModelTrainerConfig:
     trained_model_file_path = os.path.join("artifacts", "model.pkl")
 
+#this will responsible for model training
 class ModelTrainer:
     def __init__(self):
         self.model_trainer_config = ModelTrainerConfig()
